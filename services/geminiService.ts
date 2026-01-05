@@ -50,7 +50,8 @@ export const generateChatResponse = async (
       1. Provide a concise, helpful explanation in ${lang}.
       2. Use Markdown for formatting. 
       3. Use code blocks with the appropriate language tag for any code.
-      4. Keep it encouraging and clean.`,
+      4. Keep it encouraging and clean.
+      5. Ensure all information included is correct and up-to-date.`,
     });
     
     return response.text || "I couldn't generate a response.";
@@ -168,79 +169,72 @@ export const generateUnitContent = async (
   const typeStr = quizConfig.types.join(', ');
 
   try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: `Write a comprehensive educational lesson for ${courseName} (${level}) on the topic: "${unitTitle}".
-      Output Language: ${lang}.
+    // Split into two parallel requests to avoid token limits/truncation issues with large JSON responses
+    const [contentResponse, quizResponse] = await Promise.all([
+      // 1. Generate Lesson Content (Text/Markdown)
+      ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents: `Write a comprehensive educational lesson for ${courseName} (${level}) on the topic: "${unitTitle}".
+        Output Language: ${lang}.
+        Format: Markdown. Use Headers, bold text, and code blocks.
+        Explain concepts clearly with examples.`,
+      }),
       
-      Also generate ${quizConfig.count} quiz questions.
-      Allowed Question Types: ${typeStr}.
-      
-      Output JSON with two fields:
-      1. 'content': A Markdown formatted string explaining the concept with code examples. Use Headers, bold text, and code blocks.
-      2. 'questions': An array of question objects.
-         - 'id': string
-         - 'type': one of [${typeStr}]
-         - 'text': string (The question prompt)
-         
-         If type is 'mcq':
-           - 'options': array of 4 strings
-           - 'correctIndex': integer (0-3)
-         
-         If type is 'frq':
-           - 'answer': string (The model explanation/answer)
-         
-         If type is 'matching':
-           - 'pairs': array of objects {term: string, definition: string} (Generate 4 pairs)
-
-         IMPORTANT: The 'text', 'options', 'answer', and 'pairs' MUST be in ${lang}. However, keep specific code syntax or keywords in English/Code format if required.`,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            content: { type: Type.STRING },
-            questions: {
-              type: Type.ARRAY,
-              items: {
-                type: Type.OBJECT,
-                properties: {
-                  id: { type: Type.STRING },
-                  type: { type: Type.STRING },
-                  text: { type: Type.STRING },
-                  options: { type: Type.ARRAY, items: { type: Type.STRING } },
-                  correctIndex: { type: Type.INTEGER },
-                  answer: { type: Type.STRING },
-                  pairs: { 
-                    type: Type.ARRAY, 
-                    items: {
-                      type: Type.OBJECT,
-                      properties: {
-                        term: { type: Type.STRING },
-                        definition: { type: Type.STRING }
-                      }
-                    } 
-                  }
-                },
-                required: ['text', 'type']
+      // 2. Generate Quiz Questions (JSON)
+      ai.models.generateContent({
+        model: 'gemini-3-flash-preview',
+        contents: `Generate ${quizConfig.count} quiz questions for ${courseName} (${level}) on topic "${unitTitle}".
+        Allowed Question Types: ${typeStr}.
+        Output Language: ${lang}.
+        IMPORTANT: The 'text', 'options', 'answer', and 'pairs' MUST be in ${lang}. However, keep specific code syntax or keywords in English/Code format if required.`,
+        config: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: Type.OBJECT,
+            properties: {
+              questions: {
+                type: Type.ARRAY,
+                items: {
+                  type: Type.OBJECT,
+                  properties: {
+                    id: { type: Type.STRING },
+                    type: { type: Type.STRING },
+                    text: { type: Type.STRING },
+                    options: { type: Type.ARRAY, items: { type: Type.STRING } },
+                    correctIndex: { type: Type.INTEGER },
+                    answer: { type: Type.STRING },
+                    pairs: { 
+                      type: Type.ARRAY, 
+                      items: {
+                        type: Type.OBJECT,
+                        properties: {
+                          term: { type: Type.STRING },
+                          definition: { type: Type.STRING }
+                        }
+                      } 
+                    }
+                  },
+                  required: ['text', 'type']
+                }
               }
-            }
-          },
-          required: ['content', 'questions']
+            },
+            required: ['questions']
+          }
         }
-      }
-    });
+      })
+    ]);
 
-    const data = JSON.parse(response.text || "{}");
+    const contentText = contentResponse.text || "No content generated.";
+    const quizJson = JSON.parse(quizResponse.text || "{\"questions\": []}");
     
     // Add IDs if missing
-    const questions = (data.questions || []).map((q: any, i: number) => ({
+    const questions = (quizJson.questions || []).map((q: any, i: number) => ({
       ...q,
       id: q.id || `q_${Date.now()}_${i}`
     }));
 
     return {
-      content: data.content || "No content generated.",
+      content: contentText,
       questions: questions
     };
 

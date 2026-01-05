@@ -23,7 +23,7 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<AppTheme>('light');
+  const [theme, setTheme] = useState<AppTheme>('dark');
   const [language, setLanguage] = useState<LanguageCode>('en');
   
   // Local state copy of courses to allow mutation (adding generated content)
