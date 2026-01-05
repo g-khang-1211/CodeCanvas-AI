@@ -1,5 +1,6 @@
+
 import { GoogleGenAI, Type } from "@google/genai";
-import { ChatMessage, Flashcard, Unit, Question } from "../types";
+import { ChatMessage, Flashcard, Unit, Question, QuestionType } from "../types";
 
 const API_KEY = process.env.API_KEY || '';
 
@@ -16,7 +17,11 @@ const getLanguageName = (code: string) => {
     es: "Spanish",
     fr: "French",
     de: "German",
-    zh: "Chinese (Simplified)"
+    zh: "Chinese (Simplified)",
+    vi: "Vietnamese",
+    it: "Italian",
+    hi: "Hindi",
+    ar: "Arabic"
   };
   return map[code] || "English";
 }
@@ -58,7 +63,8 @@ export const generateChatResponse = async (
 export const generateFlashcardsForTopic = async (
   topic: string, 
   languageCode: string, 
-  difficulty: string
+  difficulty: string,
+  count: number = 5
 ): Promise<Flashcard[]> => {
   if (!ai) return [{ front: "API Key Missing", back: "Please check metadata.json" }];
 
@@ -67,11 +73,12 @@ export const generateFlashcardsForTopic = async (
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: `Generate 5 educational flashcards for the coding topic: "${topic}". 
+      contents: `Generate ${count} educational flashcards for the coding topic: "${topic}". 
       Target audience: ${difficulty} level.
       Output Language: ${lang}.
       
-      Return ONLY a JSON array of objects with "front" (question/concept) and "back" (answer/explanation) properties.`,
+      Return ONLY a JSON array of objects with "front" (question/concept) and "back" (answer/explanation) properties.
+      Ensure the content is in ${lang}.`,
       config: {
         responseMimeType: "application/json",
         responseSchema: {
@@ -152,11 +159,13 @@ export const generateUnitContent = async (
   courseName: string,
   unitTitle: string,
   level: string,
-  languageCode: string = "en"
+  languageCode: string = "en",
+  quizConfig: { count: number; types: QuestionType[] } = { count: 3, types: ['mcq'] }
 ): Promise<{ content: string; questions: Question[] }> => {
   if (!ai) return { content: "Error loading content.", questions: [] };
 
   const lang = getLanguageName(languageCode);
+  const typeStr = quizConfig.types.join(', ');
 
   try {
     const response = await ai.models.generateContent({
@@ -164,11 +173,27 @@ export const generateUnitContent = async (
       contents: `Write a comprehensive educational lesson for ${courseName} (${level}) on the topic: "${unitTitle}".
       Output Language: ${lang}.
       
+      Also generate ${quizConfig.count} quiz questions.
+      Allowed Question Types: ${typeStr}.
+      
       Output JSON with two fields:
       1. 'content': A Markdown formatted string explaining the concept with code examples. Use Headers, bold text, and code blocks.
-      2. 'questions': An array of 3 multiple choice questions to test understanding. 
-         IMPORTANT: The 'text' and 'options' MUST be in ${lang}. However, keep specific code syntax or keywords in English/Code format if required.
-         Each question object has 'id', 'text', 'options' (array of 4 strings), and 'correctIndex' (0-3).`,
+      2. 'questions': An array of question objects.
+         - 'id': string
+         - 'type': one of [${typeStr}]
+         - 'text': string (The question prompt)
+         
+         If type is 'mcq':
+           - 'options': array of 4 strings
+           - 'correctIndex': integer (0-3)
+         
+         If type is 'frq':
+           - 'answer': string (The model explanation/answer)
+         
+         If type is 'matching':
+           - 'pairs': array of objects {term: string, definition: string} (Generate 4 pairs)
+
+         IMPORTANT: The 'text', 'options', 'answer', and 'pairs' MUST be in ${lang}. However, keep specific code syntax or keywords in English/Code format if required.`,
       config: {
         responseMimeType: "application/json",
         responseSchema: {
@@ -181,11 +206,23 @@ export const generateUnitContent = async (
                 type: Type.OBJECT,
                 properties: {
                   id: { type: Type.STRING },
+                  type: { type: Type.STRING },
                   text: { type: Type.STRING },
                   options: { type: Type.ARRAY, items: { type: Type.STRING } },
-                  correctIndex: { type: Type.INTEGER }
+                  correctIndex: { type: Type.INTEGER },
+                  answer: { type: Type.STRING },
+                  pairs: { 
+                    type: Type.ARRAY, 
+                    items: {
+                      type: Type.OBJECT,
+                      properties: {
+                        term: { type: Type.STRING },
+                        definition: { type: Type.STRING }
+                      }
+                    } 
+                  }
                 },
-                required: ['text', 'options', 'correctIndex']
+                required: ['text', 'type']
               }
             }
           },

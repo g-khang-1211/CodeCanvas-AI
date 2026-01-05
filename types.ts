@@ -1,4 +1,5 @@
-export type LanguageCode = 'en' | 'es' | 'fr' | 'de' | 'zh';
+
+export type LanguageCode = 'en' | 'es' | 'fr' | 'de' | 'zh' | 'vi' | 'it' | 'hi' | 'ar';
 
 export type AppTheme = 'light' | 'dark';
 
@@ -8,11 +9,19 @@ export interface TranslationDictionary {
   };
 }
 
+export type QuestionType = 'mcq' | 'frq' | 'matching';
+
 export interface Question {
   id: string;
+  type: QuestionType;
   text: string;
-  options: string[];
-  correctIndex: number;
+  // For MCQ
+  options?: string[];
+  correctIndex?: number;
+  // For FRQ
+  answer?: string; // Model answer
+  // For Matching
+  pairs?: { term: string; definition: string }[]; 
 }
 
 export interface Unit {

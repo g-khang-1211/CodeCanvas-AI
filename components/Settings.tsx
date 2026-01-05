@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useApp } from '../context/AppContext';
 import { Moon, Sun, X, Globe } from 'lucide-react';
@@ -15,6 +16,10 @@ export const Settings: React.FC<SettingsProps> = ({ onClose }) => {
     { code: 'fr', label: 'Français' },
     { code: 'de', label: 'Deutsch' },
     { code: 'zh', label: '中文' },
+    { code: 'vi', label: 'Tiếng Việt' },
+    { code: 'it', label: 'Italiano' },
+    { code: 'hi', label: 'हिन्दी' },
+    { code: 'ar', label: 'العربية' },
   ];
 
   return (
@@ -47,7 +52,7 @@ export const Settings: React.FC<SettingsProps> = ({ onClose }) => {
             <label className="flex items-center gap-2 text-sm font-semibold text-gray-500 dark:text-gray-400">
               <Globe size={16} /> {t('language_label')}
             </label>
-            <div className="grid grid-cols-1 gap-2">
+            <div className="grid grid-cols-1 gap-2 max-h-60 overflow-y-auto">
               {languages.map((lang) => (
                 <button
                   key={lang.code}

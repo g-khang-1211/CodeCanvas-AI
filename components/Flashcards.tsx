@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { generateFlashcardsForTopic } from '../services/geminiService';
@@ -10,12 +11,13 @@ export const Flashcards: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(5);
 
   const handleGenerate = async () => {
     if (!selectedUnit) return;
     setLoading(true);
     const topic = `${selectedCourse?.name} - ${selectedUnit.title}`;
-    const generated = await generateFlashcardsForTopic(topic, language, 'Beginner');
+    const generated = await generateFlashcardsForTopic(topic, language, 'Beginner', count);
     setCards(generated);
     setCurrentIndex(0);
     setIsFlipped(false);
@@ -26,20 +28,34 @@ export const Flashcards: React.FC = () => {
 
   return (
     <div className="mt-12 mb-8">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
         <h3 className="text-xl font-bold dark:text-white flex items-center gap-2">
           <Brain className="text-purple-500" />
           {t('flashcards')}
         </h3>
+        
         {cards.length === 0 && (
-          <button 
-            onClick={handleGenerate}
-            disabled={loading}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-black rounded-xl text-sm font-semibold hover:opacity-90 transition-all active:scale-95 disabled:opacity-50"
-          >
-            {loading ? <RotateCw className="animate-spin" size={16} /> : <Wand2 size={16} />}
-            {t('generate_flashcards')}
-          </button>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg px-2 py-1">
+              <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 mr-2">{t('count')}:</span>
+              <input 
+                type="number" 
+                min="3" 
+                max="10" 
+                value={count} 
+                onChange={(e) => setCount(Math.max(3, Math.min(10, parseInt(e.target.value) || 3)))}
+                className="w-10 bg-transparent text-sm font-bold text-gray-900 dark:text-white outline-none text-center"
+              />
+            </div>
+            <button 
+              onClick={handleGenerate}
+              disabled={loading}
+              className="flex items-center gap-2 px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-black rounded-xl text-sm font-semibold hover:opacity-90 transition-all active:scale-95 disabled:opacity-50"
+            >
+              {loading ? <RotateCw className="animate-spin" size={16} /> : <Wand2 size={16} />}
+              {t('generate_flashcards')}
+            </button>
+          </div>
         )}
       </div>
 

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { Settings } from './components/Settings';
@@ -52,7 +53,7 @@ const MainContent = () => {
         {/* Fixed Settings Button for Unit View */}
         <button 
            onClick={() => setShowSettings(true)}
-           className="fixed top-6 right-6 p-3 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors z-30"
+           className={`fixed top-6 ${language === 'ar' ? 'left-6' : 'right-6'} p-3 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors z-30`}
         >
           <SettingsIcon size={20} className="dark:text-white" />
         </button>
@@ -120,7 +121,7 @@ const MainContent = () => {
           ) : !selectedLevel ? (
             <>
               <button onClick={() => selectCourse(null)} className="mb-6 flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 transition-colors">
-                <ChevronRight size={16} className="rotate-180" /> {t('back')}
+                <ChevronRight size={16} className={`rotate-180 ${language === 'ar' ? 'rotate-0' : ''}`} /> {t('back')}
               </button>
               <div className="flex items-center gap-4 mb-8">
                 <span className="text-4xl">{selectedCourse.icon}</span>
@@ -139,7 +140,7 @@ const MainContent = () => {
                       <p className="text-sm text-gray-500">{level.units.length > 0 ? `${level.units.length} ${t('units_created')}` : t('create_custom_syllabus')}</p>
                     </div>
                     <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                      <ChevronRight size={20} />
+                      <ChevronRight size={20} className={language === 'ar' ? 'rotate-180' : ''} />
                     </div>
                   </button>
                 ))}
@@ -148,7 +149,7 @@ const MainContent = () => {
           ) : (
             <>
                <button onClick={() => selectLevel(null)} className="mb-6 flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 transition-colors">
-                <ChevronRight size={16} className="rotate-180" /> {t('back')}
+                <ChevronRight size={16} className={`rotate-180 ${language === 'ar' ? 'rotate-0' : ''}`} /> {t('back')}
               </button>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">{t(`level_${selectedLevel.id.substring(0,3)}`)}</h2>
               <p className="text-gray-500 mb-8">{t('select_unit_prompt')}</p>
