@@ -11,7 +11,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Chào mừng trở lại",
     it: "Bentornato",
     hi: "वापसी पर स्वागत है",
-    ar: "مرحباً بعودتك"
+    ar: "مرحباً بعودتك",
+    ja: "おかえりなさい",
+    ko: "환영합니다",
+    pt: "Bem-vindo de volta",
+    ru: "С возвращением",
+    tr: "Tekrar hoşgeldiniz"
   },
   continue_learning: {
     en: "Continue Learning",
@@ -22,7 +27,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Tiếp tục học",
     it: "Continua a imparare",
     hi: "सीखना जारी रखें",
-    ar: "استمر في التعلم"
+    ar: "استمر في التعلم",
+    ja: "学習を続ける",
+    ko: "학습 계속하기",
+    pt: "Continuar aprendendo",
+    ru: "Продолжить обучение",
+    tr: "Öğrenmeye devam et"
   },
   settings: {
     en: "Settings",
@@ -33,7 +43,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Cài đặt",
     it: "Impostazioni",
     hi: "सेटिंग्स",
-    ar: "الإعدادات"
+    ar: "الإعدادات",
+    ja: "設定",
+    ko: "설정",
+    pt: "Configurações",
+    ru: "Настройки",
+    tr: "Ayarlar"
   },
   ai_tutor: {
     en: "AI Tutor",
@@ -44,7 +59,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Gia sư AI",
     it: "Tutor AI",
     hi: "एआई शिक्षक",
-    ar: "المعلم الذكي"
+    ar: "المعلم الذكي",
+    ja: "AIチューター",
+    ko: "AI 튜터",
+    pt: "Tutor IA",
+    ru: "ИИ-репетитор",
+    tr: "Yapay Zeka Eğitmeni"
   },
   flashcards: {
     en: "Flashcards",
@@ -55,7 +75,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Thẻ ghi nhớ",
     it: "Flashcard",
     hi: "फ्लैशकार्ड",
-    ar: "بطاقات تعليمية"
+    ar: "بطاقات تعليمية",
+    ja: "単語カード",
+    ko: "플래시카드",
+    pt: "Flashcards",
+    ru: "Карточки",
+    tr: "Bilgi Kartları"
   },
   generate_flashcards: {
     en: "Generate Cards",
@@ -66,7 +91,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Tạo thẻ",
     it: "Genera carte",
     hi: "कार्ड बनाएं",
-    ar: "توليد البطاقات"
+    ar: "توليد البطاقات",
+    ja: "カードを作成",
+    ko: "카드 생성",
+    pt: "Gerar Cartões",
+    ru: "Создать карточки",
+    tr: "Kart Oluştur"
   },
   quiz: {
     en: "Quiz",
@@ -77,7 +107,28 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Trắc nghiệm",
     it: "Quiz",
     hi: "प्रश्नोत्तरी",
-    ar: "اختبار"
+    ar: "اختبار",
+    ja: "クイズ",
+    ko: "퀴즈",
+    pt: "Quiz",
+    ru: "Викторина",
+    tr: "Sınav"
+  },
+  videos: {
+    en: "Videos",
+    es: "Videos",
+    fr: "Vidéos",
+    de: "Videos",
+    zh: "视频",
+    vi: "Video",
+    it: "Video",
+    hi: "वीडियो",
+    ar: "فيديو",
+    ja: "動画",
+    ko: "비디오",
+    pt: "Vídeos",
+    ru: "Видео",
+    tr: "Videolar"
   },
   learn: {
     en: "Learn",
@@ -88,7 +139,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Học",
     it: "Impara",
     hi: "सीखें",
-    ar: "تعلم"
+    ar: "تعلم",
+    ja: "学ぶ",
+    ko: "학습",
+    pt: "Aprender",
+    ru: "Учить",
+    tr: "Öğren"
   },
   submit: {
     en: "Submit",
@@ -99,7 +155,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Nộp bài",
     it: "Invia",
     hi: "जमा करें",
-    ar: "إرسال"
+    ar: "إرسال",
+    ja: "送信",
+    ko: "제출",
+    pt: "Enviar",
+    ru: "Отправить",
+    tr: "Gönder"
   },
   next_unit: {
     en: "Next Unit",
@@ -110,18 +171,28 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Bài tiếp theo",
     it: "Prossima unità",
     hi: "अगली इकाई",
-    ar: "الوحدة التالية"
+    ar: "الوحدة التالية",
+    ja: "次のユニット",
+    ko: "다음 단원",
+    pt: "Próxima Unidade",
+    ru: "След. раздел",
+    tr: "Sonraki Ünite"
   },
   type_message: {
-    en: "Ask me anything about code...",
-    es: "Pregúntame lo que sea sobre código...",
+    en: "Ask me anything...",
+    es: "Pregúntame lo que sea...",
     fr: "Posez-moi une question...",
-    de: "Frag mich alles über Code...",
-    zh: "问我任何关于代码的问题...",
-    vi: "Hỏi tôi bất cứ điều gì về mã...",
-    it: "Chiedimi qualsiasi cosa sul codice...",
-    hi: "कोड के बारे में मुझसे कुछ भी पूछें...",
-    ar: "اسألني أي شيء عن الكود..."
+    de: "Frag mich alles...",
+    zh: "问我任何问题...",
+    vi: "Hỏi tôi bất cứ điều gì...",
+    it: "Chiedimi qualsiasi cosa...",
+    hi: "मुझसे कुछ भी पूछें...",
+    ar: "اسألني أي شيء...",
+    ja: "何でも聞いてください...",
+    ko: "무엇이든 물어보세요...",
+    pt: "Pergunte qualquer coisa...",
+    ru: "Спросите меня о чем угодно...",
+    tr: "Bana her şeyi sor..."
   },
   back: {
     en: "Back",
@@ -132,7 +203,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Quay lại",
     it: "Indietro",
     hi: "वापस",
-    ar: "رجوع"
+    ar: "رجوع",
+    ja: "戻る",
+    ko: "뒤로",
+    pt: "Voltar",
+    ru: "Назад",
+    tr: "Geri"
   },
   design_path: {
     en: "Design Your Path",
@@ -143,7 +219,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Thiết kế lộ trình của bạn",
     it: "Progetta il tuo percorso",
     hi: "अपना पथ डिज़ाइन करें",
-    ar: "صمم مسارك"
+    ar: "صمم مسارك",
+    ja: "学習パスを設計",
+    ko: "학습 경로 설계",
+    pt: "Desenhe seu Caminho",
+    ru: "Создайте свой путь",
+    tr: "Yolunu Tasarla"
   },
   tell_ai: {
     en: "Tell the AI what you want to focus on (e.g., 'Game Development' or 'Basics'), or leave blank for standard.",
@@ -154,7 +235,108 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Nói cho AI biết bạn muốn tập trung vào gì (vd: 'Phát triển Game'), hoặc để trống.",
     it: "Di' all'AI su cosa vuoi concentrarti (es. 'Sviluppo giochi'), o lascia vuoto.",
     hi: "एआई को बताएं कि आप किस पर ध्यान केंद्रित करना चाहते हैं (जैसे 'गेम डेवलपमेंट'), या खाली छोड़ दें।",
-    ar: "أخبر الذكاء الاصطناعي بما تريد التركيز عليه (مثل 'تطوير الألعاب')، أو اتركه فارغاً."
+    ar: "أخبر الذكاء الاصطناعي بما تريد التركيز عليه (مثل 'تطوير الألعاب')، أو اتركه فارغاً.",
+    ja: "AIに焦点を当てたいことを伝えてください（例：「ゲーム開発」）、または空白のままにします。",
+    ko: "AI에게 집중하고 싶은 분야(예: '게임 개발')를 말하거나 비워 두세요.",
+    pt: "Diga à IA o que você quer focar (ex: 'Desenvolvimento de Jogos') ou deixe em branco.",
+    ru: "Скажите ИИ, на чем вы хотите сосредоточиться (например, «Разработка игр»), или оставьте пустым.",
+    tr: "AI'ya neye odaklanmak istediğinizi söyleyin (örn. 'Oyun Geliştirme') veya boş bırakın."
+  },
+  other_prompt_desc: {
+    en: "Enter the subject you want to learn. The AI will create a custom curriculum for you.",
+    es: "Ingresa el tema que quieres aprender. La IA creará un plan de estudios personalizado.",
+    fr: "Entrez le sujet que vous souhaitez apprendre. L'IA créera un programme personnalisé.",
+    de: "Gib das Thema ein, das du lernen möchtest. Die KI erstellt einen benutzerdefinierten Lehrplan.",
+    zh: "输入你想学习的主题。AI将为你创建自定义课程。",
+    vi: "Nhập chủ đề bạn muốn học. AI sẽ tạo giáo trình tùy chỉnh cho bạn.",
+    it: "Inserisci l'argomento che vuoi imparare. L'AI creerà un curriculum personalizzato.",
+    hi: "वह विषय दर्ज करें जिसे आप सीखना चाहते हैं। AI आपके लिए एक कस्टम पाठ्यक्रम बनाएगा।",
+    ar: "أدخل الموضوع الذي تريد تعلمه. سيقوم الذكاء الاصطناعي بإنشاء منهج مخصص لك.",
+    ja: "学びたい科目を入力してください。AIがカスタムカリキュラムを作成します。",
+    ko: "학습하고 싶은 주제를 입력하세요. AI가 맞춤형 커리큘럼을 만들어 드립니다.",
+    pt: "Digite o assunto que você deseja aprender. A IA criará um currículo personalizado.",
+    ru: "Введите тему, которую хотите изучить. ИИ создаст индивидуальный план.",
+    tr: "Öğrenmek istediğiniz konuyu girin. AI sizin için özel bir müfredat oluşturacaktır."
+  },
+  subject_label: {
+    en: "Subject",
+    es: "Asunto",
+    fr: "Sujet",
+    de: "Thema",
+    zh: "主题",
+    vi: "Chủ đề",
+    it: "Oggetto",
+    hi: "विषय",
+    ar: "الموضوع",
+    ja: "件名",
+    ko: "주제",
+    pt: "Assunto",
+    ru: "Тема",
+    tr: "Konu"
+  },
+  subject_placeholder: {
+    en: "E.g., Biology, World History, Quantum Physics...",
+    es: "Ej. Biología, Historia Mundial...",
+    fr: "Ex. Biologie, Histoire...",
+    de: "z.B. Biologie, Weltgeschichte...",
+    zh: "例如：生物学、世界历史...",
+    vi: "Vd: Sinh học, Lịch sử...",
+    it: "Es. Biologia, Storia...",
+    hi: "जैसे जीव विज्ञान, विश्व इतिहास...",
+    ar: "مثلاً: الأحياء، التاريخ...",
+    ja: "例：生物学、世界史...",
+    ko: "예: 생물학, 세계사...",
+    pt: "Ex: Biologia, História...",
+    ru: "Например: Биология, История...",
+    tr: "Örn. Biyoloji, Dünya Tarihi..."
+  },
+  focus_label: {
+    en: "Focus Area",
+    es: "Área de Enfoque",
+    fr: "Domaine d'intérêt",
+    de: "Schwerpunkt",
+    zh: "重点领域",
+    vi: "Lĩnh vực tập trung",
+    it: "Area di interesse",
+    hi: "फोकस क्षेत्र",
+    ar: "مجال التركيز",
+    ja: "重点分野",
+    ko: "집중 분야",
+    pt: "Área de Foco",
+    ru: "Область внимания",
+    tr: "Odak Alanı"
+  },
+  focus_placeholder: {
+    en: "E.g., Basics, Advanced Concepts...",
+    es: "Ej. Conceptos básicos...",
+    fr: "Ex. Bases, Concepts avancés...",
+    de: "z.B. Grundlagen...",
+    zh: "例如：基础知识...",
+    vi: "Vd: Cơ bản, Nâng cao...",
+    it: "Es. Basi, Concetti avanzati...",
+    hi: "जैसे मूल बातें...",
+    ar: "مثلاً: الأساسيات...",
+    ja: "例：基礎、応用...",
+    ko: "예: 기초, 심화...",
+    pt: "Ex: Básico, Avançado...",
+    ru: "Например: Основы...",
+    tr: "Örn. Temel Bilgiler..."
+  },
+  optional: {
+    en: "Optional",
+    es: "Opcional",
+    fr: "Optionnel",
+    de: "Optional",
+    zh: "可选",
+    vi: "Tùy chọn",
+    it: "Opzionale",
+    hi: "वैकल्पिक",
+    ar: "اختياري",
+    ja: "任意",
+    ko: "선택",
+    pt: "Opcional",
+    ru: "Необязательно",
+    tr: "İsteğe bağlı"
   },
   generate_syllabus: {
     en: "Generate Syllabus",
@@ -165,7 +347,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Tạo giáo trình",
     it: "Genera programma",
     hi: "पाठ्यक्रम उत्पन्न करें",
-    ar: "توليد المنهج"
+    ar: "توليد المنهج",
+    ja: "シラバスを作成",
+    ko: "강의 계획서 생성",
+    pt: "Gerar Programa",
+    ru: "Создать план",
+    tr: "Müfredat Oluştur"
   },
   generating_syllabus: {
     en: "Generating Syllabus...",
@@ -176,7 +363,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Đang tạo giáo trình...",
     it: "Generazione programma...",
     hi: "पाठ्यक्रम तैयार हो रहा है...",
-    ar: "جاري إنشاء المنهج..."
+    ar: "جاري إنشاء المنهج...",
+    ja: "シラバスを作成中...",
+    ko: "강의 계획서 생성 중...",
+    pt: "Gerando Programa...",
+    ru: "Создание плана...",
+    tr: "Müfredat Oluşturuluyor..."
   },
   generating_lesson: {
     en: "Generating Lesson...",
@@ -187,7 +379,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Đang tạo bài học...",
     it: "Generazione lezione...",
     hi: "पाठ तैयार हो रहा है...",
-    ar: "جاري إنشاء الدرس..."
+    ar: "جاري إنشاء الدرس...",
+    ja: "レッスンを作成中...",
+    ko: "레슨 생성 중...",
+    pt: "Gerando Lição...",
+    ru: "Создание урока...",
+    tr: "Ders Oluşturuluyor..."
   },
   crafting_lesson: {
     en: "AI is crafting a custom lesson on",
@@ -198,7 +395,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "AI đang soạn bài học tùy chỉnh về",
     it: "L'AI sta creando una lezione su",
     hi: "एआई इस पर एक पाठ तैयार कर रहा है:",
-    ar: "يقوم الذكاء الاصطناعي بصياغة درس مخصص حول"
+    ar: "يقوم الذكاء الاصطناعي بصياغة درس مخصص حول",
+    ja: "AIがカスタムレッスンを作成しています：",
+    ko: "AI가 맞춤형 레슨을 만들고 있습니다: ",
+    pt: "A IA está criando uma lição personalizada sobre",
+    ru: "ИИ создает урок на тему",
+    tr: "AI özel bir ders hazırlıyor:"
   },
   reset_syllabus: {
     en: "Reset and create new syllabus",
@@ -209,7 +411,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Đặt lại và tạo giáo trình mới",
     it: "Reimposta e crea nuovo programma",
     hi: "रीसेट करें और नया पाठ्यक्रम बनाएं",
-    ar: "إعادة تعيين وإنشاء منهج جديد"
+    ar: "إعادة تعيين وإنشاء منهج جديد",
+    ja: "リセットして新しいシラバスを作成",
+    ko: "재설정하고 새 강의 계획서 만들기",
+    pt: "Redefinir e criar novo programa",
+    ru: "Сбросить и создать новый план",
+    tr: "Sıfırla ve yeni müfredat oluştur"
   },
   units_created: {
     en: "Units Created",
@@ -220,7 +427,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Bài học đã tạo",
     it: "Unità create",
     hi: "इकाइयाँ बनाई गईं",
-    ar: "وحدات تم إنشاؤها"
+    ar: "وحدات تم إنشاؤها",
+    ja: "作成されたユニット",
+    ko: "생성된 단원",
+    pt: "Unidades Criadas",
+    ru: "Создано разделов",
+    tr: "Oluşturulan Üniteler"
   },
   create_custom_syllabus: {
     en: "Create Custom Syllabus",
@@ -231,7 +443,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Tạo giáo trình tùy chỉnh",
     it: "Crea programma personalizzato",
     hi: "कस्टम पाठ्यक्रम बनाएं",
-    ar: "إنشاء منهج مخصص"
+    ar: "إنشاء منهج مخصص",
+    ja: "カスタムシラバスを作成",
+    ko: "맞춤형 강의 계획서 만들기",
+    pt: "Criar Programa Personalizado",
+    ru: "Создать свой план",
+    tr: "Özel Müfredat Oluştur"
   },
   select_unit_prompt: {
     en: "Select a unit or create a new syllabus.",
@@ -242,7 +459,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Chọn một bài học hoặc tạo giáo trình mới.",
     it: "Seleziona un'unità o crea un nuovo programma.",
     hi: "एक इकाई चुनें या नया पाठ्यक्रम बनाएं।",
-    ar: "حدد وحدة أو أنشئ منهجاً جديداً."
+    ar: "حدد وحدة أو أنشئ منهجاً جديداً.",
+    ja: "ユニットを選択するか、新しいシラバスを作成してください。",
+    ko: "단원을 선택하거나 새 강의 계획서를 만드세요.",
+    pt: "Selecione uma unidade ou crie um novo programa.",
+    ru: "Выберите раздел или создайте новый план.",
+    tr: "Bir ünite seçin veya yeni bir müfredat oluşturun."
   },
   light_mode: {
     en: "Light Mode",
@@ -253,7 +475,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Chế độ sáng",
     it: "Modalità chiara",
     hi: "लाइट मोड",
-    ar: "الوضع النهاري"
+    ar: "الوضع النهاري",
+    ja: "ライトモード",
+    ko: "라이트 모드",
+    pt: "Modo Claro",
+    ru: "Светлая тема",
+    tr: "Aydınlık Mod"
   },
   dark_mode: {
     en: "Dark Mode",
@@ -264,7 +491,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Chế độ tối",
     it: "Modalità scura",
     hi: "डार्क मोड",
-    ar: "الوضع الليلي"
+    ar: "الوضع الليلي",
+    ja: "ダークモード",
+    ko: "다크 모드",
+    pt: "Modo Escuro",
+    ru: "Темная тема",
+    tr: "Karanlık Mod"
   },
   language_label: {
     en: "Language",
@@ -275,7 +507,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Ngôn ngữ",
     it: "Lingua",
     hi: "भाषा",
-    ar: "اللغة"
+    ar: "اللغة",
+    ja: "言語",
+    ko: "언어",
+    pt: "Idioma",
+    ru: "Язык",
+    tr: "Dil"
   },
   customize_quiz: {
     en: "Customize Quiz",
@@ -286,7 +523,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Tùy chỉnh trắc nghiệm",
     it: "Personalizza Quiz",
     hi: "प्रश्नोत्तरी अनुकूलित करें",
-    ar: "تخصيص الاختبار"
+    ar: "تخصيص الاختبار",
+    ja: "クイズをカスタマイズ",
+    ko: "퀴즈 사용자 정의",
+    pt: "Personalizar Quiz",
+    ru: "Настроить тест",
+    tr: "Sınavı Özelleştir"
   },
   num_questions: {
     en: "Number of Questions",
@@ -297,7 +539,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Số lượng câu hỏi",
     it: "Numero di domande",
     hi: "प्रश्नों की संख्या",
-    ar: "عدد الأسئلة"
+    ar: "عدد الأسئلة",
+    ja: "質問数",
+    ko: "문항 수",
+    pt: "Número de Questões",
+    ru: "Количество вопросов",
+    tr: "Soru Sayısı"
   },
   question_types: {
     en: "Question Types",
@@ -308,7 +555,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Loại câu hỏi",
     it: "Tipi di domande",
     hi: "प्रश्न प्रकार",
-    ar: "أنواع الأسئلة"
+    ar: "أنواع الأسئلة",
+    ja: "質問の種類",
+    ko: "질문 유형",
+    pt: "Tipos de Questões",
+    ru: "Типы вопросов",
+    tr: "Soru Tipleri"
   },
   start_lesson: {
     en: "Start Lesson",
@@ -319,7 +571,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Bắt đầu bài học",
     it: "Inizia lezione",
     hi: "पाठ शुरू करें",
-    ar: "ابدأ الدرس"
+    ar: "ابدأ الدرس",
+    ja: "レッスンを開始",
+    ko: "레슨 시작",
+    pt: "Iniciar Lição",
+    ru: "Начать урок",
+    tr: "Dersi Başlat"
   },
   count: {
     en: "Count",
@@ -330,7 +587,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Số lượng",
     it: "Conteggio",
     hi: "गिनती",
-    ar: "العدد"
+    ar: "العدد",
+    ja: "数",
+    ko: "개수",
+    pt: "Contagem",
+    ru: "Количество",
+    tr: "Sayım"
   },
   reveal_answer: {
     en: "Reveal Answer",
@@ -341,7 +603,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Hiện đáp án",
     it: "Rivela risposta",
     hi: "उत्तर दिखाएं",
-    ar: "كشف الإجابة"
+    ar: "كشف الإجابة",
+    ja: "答えを表示",
+    ko: "정답 보기",
+    pt: "Revelar Resposta",
+    ru: "Показать ответ",
+    tr: "Cevabı Göster"
   },
   model_answer: {
     en: "Model Answer",
@@ -352,7 +619,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Đáp án mẫu",
     it: "Risposta modello",
     hi: "आदर्श उत्तर",
-    ar: "الإجابة النموذجية"
+    ar: "الإجابة النموذجية",
+    ja: "模範解答",
+    ko: "모범 답안",
+    pt: "Resposta Modelo",
+    ru: "Пример ответа",
+    tr: "Örnek Cevap"
   },
   match_pairs: {
     en: "Match the following pairs",
@@ -363,7 +635,12 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Nối các cặp sau",
     it: "Abbina le seguenti coppie",
     hi: "निम्नलिखित जोड़े मिलाएं",
-    ar: "طابق الأزواج التالية"
+    ar: "طابق الأزواج التالية",
+    ja: "次のペアを一致させてください",
+    ko: "다음 짝을 맞추세요",
+    pt: "Combine os pares",
+    ru: "Сопоставьте пары",
+    tr: "Aşağıdaki çiftleri eşleştirin"
   },
   select_match: {
     en: "Select matching term...",
@@ -374,11 +651,128 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Chọn thuật ngữ...",
     it: "Seleziona termine...",
     hi: "मिलान शब्द चुनें...",
-    ar: "اختر المصطلح المطابق..."
+    ar: "اختر المصطلح المطابق...",
+    ja: "用語を選択...",
+    ko: "용어 선택...",
+    pt: "Selecione o termo...",
+    ru: "Выберите термин...",
+    tr: "Terim seçin..."
+  },
+  searching_videos: {
+    en: "Searching videos...",
+    es: "Buscando videos...",
+    fr: "Recherche de vidéos...",
+    de: "Suche Videos...",
+    zh: "搜索视频...",
+    vi: "Đang tìm video...",
+    it: "Ricerca video...",
+    hi: "वीडियो खोज रहे हैं...",
+    ar: "البحث عن مقاطع فيديو...",
+    ja: "動画を検索中...",
+    ko: "비디오 검색 중...",
+    pt: "Buscando vídeos...",
+    ru: "Поиск видео...",
+    tr: "Videolar aranıyor..."
+  },
+  unable_to_find_videos: {
+    en: "Unable to find relevant videos.",
+    es: "No se pudieron encontrar videos relevantes.",
+    fr: "Impossible de trouver des vidéos pertinentes.",
+    de: "Keine relevanten Videos gefunden.",
+    zh: "无法找到相关视频。",
+    vi: "Không tìm thấy video phù hợp.",
+    it: "Impossibile trovare video pertinenti.",
+    hi: "प्रासंगिक वीडियो खोजने में असमर्थ।",
+    ar: "تعذر العثور على مقاطع فيديو ذات صلة.",
+    ja: "関連する動画が見つかりませんでした。",
+    ko: "관련 비디오를 찾을 수 없습니다.",
+    pt: "Não foi possível encontrar vídeos relevantes.",
+    ru: "Не удалось найти релевантные видео.",
+    tr: "İlgili video bulunamadı."
+  },
+  cancel: {
+    en: "Cancel",
+    es: "Cancelar",
+    fr: "Annuler",
+    de: "Abbrechen",
+    zh: "取消",
+    vi: "Hủy",
+    it: "Annulla",
+    hi: "रद्द करें",
+    ar: "إلغاء",
+    ja: "キャンセル",
+    ko: "취소",
+    pt: "Cancelar",
+    ru: "Отмена",
+    tr: "İptal"
+  },
+  unit_focus_label: {
+    en: "Lesson Focus (Optional)",
+    es: "Enfoque de la lección (Opcional)",
+    fr: "Objectif de la leçon (Facultatif)",
+    de: "Lektionsfokus (Optional)",
+    zh: "课程重点（可选）",
+    vi: "Trọng tâm bài học (Tùy chọn)",
+    it: "Focus lezione (Opzionale)",
+    hi: "पाठ का ध्यान (वैकल्पिक)",
+    ar: "تركيز الدرس (اختياري)",
+    ja: "レッスンの焦点（任意）",
+    ko: "레슨 초점 (선택)",
+    pt: "Foco da Lição (Opcional)",
+    ru: "Фокус урока (Необязательно)",
+    tr: "Ders Odağı (İsteğe bağlı)"
+  },
+  unit_focus_placeholder: {
+    en: "E.g., specific examples, real-world applications...",
+    es: "Ej., ejemplos específicos, aplicaciones reales...",
+    fr: "Ex., exemples spécifiques, applications réelles...",
+    de: "z.B. spezifische Beispiele, Anwendungen...",
+    zh: "例如：具体示例、实际应用...",
+    vi: "Vd: ví dụ cụ thể, ứng dụng thực tế...",
+    it: "Es. esempi specifici, applicazioni reali...",
+    hi: "जैसे, विशिष्ट उदाहरण, वास्तविक दुनिया के अनुप्रयोग...",
+    ar: "مثل أمثلة محددة، تطبيقات واقعية...",
+    ja: "例：具体例、実世界での応用...",
+    ko: "예: 구체적인 예, 실제 적용...",
+    pt: "Ex: exemplos específicos, aplicações reais...",
+    ru: "Например: примеры, применение...",
+    tr: "Örn. belirli örnekler, gerçek dünya uygulamaları..."
+  },
+  regenerate: {
+    en: "Regenerate / Reset",
+    es: "Regenerar / Reiniciar",
+    fr: "Régénérer / Réinitialiser",
+    de: "Regenerieren / Zurücksetzen",
+    zh: "重新生成 / 重置",
+    vi: "Tạo lại / Đặt lại",
+    it: "Rigenera / Reimposta",
+    hi: "पुनर्जनन / रीसेट",
+    ar: "إعادة إنشاء / إعادة تعيين",
+    ja: "再生成 / リセット",
+    ko: "재생성 / 재설정",
+    pt: "Regenerar / Redefinir",
+    ru: "Пересоздать / Сброс",
+    tr: "Yeniden Oluştur / Sıfırla"
+  },
+  delete_content: {
+    en: "Delete Content",
+    es: "Borrar Contenido",
+    fr: "Supprimer le contenu",
+    de: "Inhalt löschen",
+    zh: "删除内容",
+    vi: "Xóa nội dung",
+    it: "Elimina contenuto",
+    hi: "सामग्री हटाएं",
+    ar: "حذف المحتوى",
+    ja: "コンテンツを削除",
+    ko: "콘텐츠 삭제",
+    pt: "Excluir Conteúdo",
+    ru: "Удалить контент",
+    tr: "İçeriği Sil"
   },
 
   // Course Names and Descriptions
-  course_python: { en: "Python", es: "Python", fr: "Python", de: "Python", zh: "Python", vi: "Python", it: "Python", hi: "पायथन", ar: "بايثون" },
+  course_python: { en: "Python", es: "Python", fr: "Python", de: "Python", zh: "Python", vi: "Python", it: "Python", hi: "पायथन", ar: "بايثون", ja: "Python", ko: "파이썬", pt: "Python", ru: "Python", tr: "Python" },
   desc_python: { 
     en: "Data science, AI, and web development.", 
     es: "Ciencia de datos, IA y desarrollo web.", 
@@ -388,10 +782,15 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Khoa học dữ liệu, AI và phát triển web.",
     it: "Scienza dei dati, AI e sviluppo web.",
     hi: "डेटा विज्ञान, एआई और वेब विकास।",
-    ar: "علوم البيانات، الذكاء الاصطناعي وتطوير الويب."
+    ar: "علوم البيانات، الذكاء الاصطناعي وتطوير الويب.",
+    ja: "データサイエンス、AI、Web開発。",
+    ko: "데이터 과학, AI 및 웹 개발.",
+    pt: "Ciência de dados, IA e desenvolvimento web.",
+    ru: "Data Science, ИИ и веб-разработка.",
+    tr: "Veri bilimi, AI ve web geliştirme."
   },
   
-  course_cpp: { en: "C++", es: "C++", fr: "C++", de: "C++", zh: "C++", vi: "C++", it: "C++", hi: "सी++", ar: "سي بلس بلس" },
+  course_cpp: { en: "C++", es: "C++", fr: "C++", de: "C++", zh: "C++", vi: "C++", it: "C++", hi: "सी++", ar: "سي بلس بلس", ja: "C++", ko: "C++", pt: "C++", ru: "C++", tr: "C++" },
   desc_cpp: { 
     en: "High-performance systems and game engines.", 
     es: "Sistemas de alto rendimiento y motores de juegos.", 
@@ -401,10 +800,15 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Hệ thống hiệu suất cao và engine game.",
     it: "Sistemi ad alte prestazioni e motori di gioco.",
     hi: "उच्च-प्रदर्शन प्रणाली और गेम इंजन।",
-    ar: "أنظمة عالية الأداء ومحركات الألعاب."
+    ar: "أنظمة عالية الأداء ومحركات الألعاب.",
+    ja: "高性能システムとゲームエンジン。",
+    ko: "고성능 시스템 및 게임 엔진.",
+    pt: "Sistemas de alto desempenho e motores de jogos.",
+    ru: "Высокопроизводительные системы и игровые движки.",
+    tr: "Yüksek performanslı sistemler ve oyun motorları."
   },
   
-  course_js: { en: "JavaScript", es: "JavaScript", fr: "JavaScript", de: "JavaScript", zh: "JavaScript", vi: "JavaScript", it: "JavaScript", hi: "जावास्क्रिप्ट", ar: "جافا سكريبت" },
+  course_js: { en: "JavaScript", es: "JavaScript", fr: "JavaScript", de: "JavaScript", zh: "JavaScript", vi: "JavaScript", it: "JavaScript", hi: "जावास्क्रिप्ट", ar: "جافا سكريبت", ja: "JavaScript", ko: "자바스크립트", pt: "JavaScript", ru: "JavaScript", tr: "JavaScript" },
   desc_js: { 
     en: "Interactive web development.", 
     es: "Desarrollo web interactivo.", 
@@ -414,10 +818,15 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Phát triển web tương tác.",
     it: "Sviluppo web interattivo.",
     hi: "इंटरैक्टिव वेब विकास।",
-    ar: "تطوير الويب التفاعلي."
+    ar: "تطوير الويب التفاعلي.",
+    ja: "インタラクティブなWeb開発。",
+    ko: "대화형 웹 개발.",
+    pt: "Desenvolvimento web interativo.",
+    ru: "Интерактивная веб-разработка.",
+    tr: "Etkileşimli web geliştirme."
   },
   
-  course_ts: { en: "TypeScript", es: "TypeScript", fr: "TypeScript", de: "TypeScript", zh: "TypeScript", vi: "TypeScript", it: "TypeScript", hi: "टाइपस्क्रिप्ट", ar: "تايب سكريبت" },
+  course_ts: { en: "TypeScript", es: "TypeScript", fr: "TypeScript", de: "TypeScript", zh: "TypeScript", vi: "TypeScript", it: "TypeScript", hi: "टाइपस्क्रिप्ट", ar: "تايب سكريبت", ja: "TypeScript", ko: "타입스크립트", pt: "TypeScript", ru: "TypeScript", tr: "TypeScript" },
   desc_ts: { 
     en: "JavaScript with syntax for types.", 
     es: "JavaScript con sintaxis para tipos.", 
@@ -427,10 +836,15 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "JavaScript với cú pháp cho các kiểu.",
     it: "JavaScript con sintassi per i tipi.",
     hi: "प्रकारों के लिए सिंटैक्स के साथ जावास्क्रिप्ट।",
-    ar: "جافا سكريبت مع بناء الجملة للأنواع."
+    ar: "جافا سكريبت مع بناء جملة للأنواع.",
+    ja: "型構文を持つJavaScript。",
+    ko: "타입 구문이 있는 자바스크립트.",
+    pt: "JavaScript com sintaxe para tipos.",
+    ru: "JavaScript с синтаксисом типов.",
+    tr: "Türler için sözdizimine sahip JavaScript."
   },
   
-  course_java: { en: "Java", es: "Java", fr: "Java", de: "Java", zh: "Java", vi: "Java", it: "Java", hi: "जावा", ar: "جافا" },
+  course_java: { en: "Java", es: "Java", fr: "Java", de: "Java", zh: "Java", vi: "Java", it: "Java", hi: "जावा", ar: "جافا", ja: "Java", ko: "Java", pt: "Java", ru: "Java", tr: "Java" },
   desc_java: { 
     en: "Enterprise applications and Android apps.", 
     es: "Aplicaciones empresariales y apps de Android.", 
@@ -440,10 +854,15 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Ứng dụng doanh nghiệp và ứng dụng Android.",
     it: "Applicazioni aziendali e app Android.",
     hi: "एंटरप्राइज़ एप्लिकेशन और एंड्रॉइड ऐप्स।",
-    ar: "تطبيقات المؤسسات وتطبيقات أندرويد."
+    ar: "تطبيقات المؤسسات وتطبيقات أندرويد.",
+    ja: "企業向けアプリとAndroidアプリ。",
+    ko: "엔터프라이즈 애플리케이션 및 안드로이드 앱.",
+    pt: "Aplicações empresariais e apps Android.",
+    ru: "Корпоративные приложения и Android.",
+    tr: "Kurumsal uygulamalar ve Android uygulamaları."
   },
   
-  course_sql: { en: "SQL", es: "SQL", fr: "SQL", de: "SQL", zh: "SQL", vi: "SQL", it: "SQL", hi: "एसक्यूएल", ar: "إس كيو إل" },
+  course_sql: { en: "SQL", es: "SQL", fr: "SQL", de: "SQL", zh: "SQL", vi: "SQL", it: "SQL", hi: "एसक्यूएल", ar: "إس كيو إل", ja: "SQL", ko: "SQL", pt: "SQL", ru: "SQL", tr: "SQL" },
   desc_sql: { 
     en: "Database management and queries.", 
     es: "Gestión de bases de datos y consultas.", 
@@ -453,10 +872,15 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Quản lý cơ sở dữ liệu và truy vấn.",
     it: "Gestione database e query.",
     hi: "डेटाबेस प्रबंधन और प्रश्न।",
-    ar: "إدارة قواعد البيانات والاستعلامات."
+    ar: "إدارة قواعد البيانات والاستعلامات.",
+    ja: "データベース管理とクエリ。",
+    ko: "데이터베이스 관리 및 쿼리.",
+    pt: "Gerenciamento de banco de dados.",
+    ru: "Управление базами данных и запросы.",
+    tr: "Veritabanı yönetimi ve sorgular."
   },
   
-  course_html: { en: "HTML/CSS", es: "HTML/CSS", fr: "HTML/CSS", de: "HTML/CSS", zh: "HTML/CSS", vi: "HTML/CSS", it: "HTML/CSS", hi: "HTML/CSS", ar: "HTML/CSS" },
+  course_html: { en: "HTML/CSS", es: "HTML/CSS", fr: "HTML/CSS", de: "HTML/CSS", zh: "HTML/CSS", vi: "HTML/CSS", it: "HTML/CSS", hi: "HTML/CSS", ar: "HTML/CSS", ja: "HTML/CSS", ko: "HTML/CSS", pt: "HTML/CSS", ru: "HTML/CSS", tr: "HTML/CSS" },
   desc_html: { 
     en: "The structure and style of the web.", 
     es: "La estructura y el estilo de la web.", 
@@ -466,10 +890,15 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Cấu trúc và phong cách của web.",
     it: "La struttura e lo stile del web.",
     hi: "वेब की संरचना और शैली।",
-    ar: "هيكل وأسلوب الويب."
+    ar: "هيكل وأسلوب الويب.",
+    ja: "Webの構造とスタイル。",
+    ko: "웹의 구조와 스타일.",
+    pt: "A estrutura e o estilo da web.",
+    ru: "Структура и стиль веба.",
+    tr: "Web'in yapısı ve stili."
   },
   
-  course_excel: { en: "Excel", es: "Excel", fr: "Excel", de: "Excel", zh: "Excel", vi: "Excel", it: "Excel", hi: "एक्सेल", ar: "إكسل" },
+  course_excel: { en: "Excel", es: "Excel", fr: "Excel", de: "Excel", zh: "Excel", vi: "Excel", it: "Excel", hi: "एक्सेल", ar: "إكسل", ja: "Excel", ko: "엑셀", pt: "Excel", ru: "Excel", tr: "Excel" },
   desc_excel: { 
     en: "Spreadsheets, formulas, and VBA.", 
     es: "Hojas de cálculo, fórmulas y VBA.", 
@@ -479,10 +908,15 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Bảng tính, công thức và VBA.",
     it: "Fogli di calcolo, formule e VBA.",
     hi: "स्प्रेडशीट, सूत्र और वीबीए।",
-    ar: "جداول البيانات والصيغ و VBA."
+    ar: "جداول البيانات والصيغ و VBA.",
+    ja: "スプレッドシート、数式、VBA。",
+    ko: "스프레드시트, 수식 및 VBA.",
+    pt: "Planilhas, fórmulas e VBA.",
+    ru: "Таблицы, формулы и VBA.",
+    tr: "E-tablolar, formüller ve VBA."
   },
   
-  course_rust: { en: "Rust", es: "Rust", fr: "Rust", de: "Rust", zh: "Rust", vi: "Rust", it: "Rust", hi: "रस्ट", ar: "رست" },
+  course_rust: { en: "Rust", es: "Rust", fr: "Rust", de: "Rust", zh: "Rust", vi: "Rust", it: "Rust", hi: "रस्ट", ar: "رست", ja: "Rust", ko: "Rust", pt: "Rust", ru: "Rust", tr: "Rust" },
   desc_rust: { 
     en: "Memory safety without garbage collection.", 
     es: "Seguridad de memoria sin recolección de basura.", 
@@ -492,10 +926,15 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "An toàn bộ nhớ mà không cần thu gom rác.",
     it: "Sicurezza della memoria senza garbage collection.",
     hi: "कचरा संग्रह के बिना मेमोरी सुरक्षा।",
-    ar: "أمان الذاكرة بدون جمع القمامة."
+    ar: "أمان الذاكرة بدون جمع القمامة.",
+    ja: "ガベージコレクションなしのメモリ安全性。",
+    ko: "가비지 수집 없는 메모리 안전성.",
+    pt: "Segurança de memória sem garbage collection.",
+    ru: "Безопасность памяти без GC.",
+    tr: "Çöp toplama olmadan bellek güvenliği."
   },
   
-  course_c: { en: "C", es: "C", fr: "C", de: "C", zh: "C", vi: "C", it: "C", hi: "सी", ar: "سي" },
+  course_c: { en: "C", es: "C", fr: "C", de: "C", zh: "C", vi: "C", it: "C", hi: "सी", ar: "سي", ja: "C", ko: "C", pt: "C", ru: "C", tr: "C" },
   desc_c: { 
     en: "Low-level system programming.", 
     es: "Programación de sistemas de bajo nivel.", 
@@ -505,10 +944,15 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Lập trình hệ thống cấp thấp.",
     it: "Programmazione di sistema a basso livello.",
     hi: "निम्न-स्तरीय सिस्टम प्रोग्रामिंग।",
-    ar: "برمجة الأنظمة منخفضة المستوى."
+    ar: "برمجة الأنظمة منخفضة المستوى.",
+    ja: "低レベルシステムプログラミング。",
+    ko: "저수준 시스템 프로그래밍.",
+    pt: "Programação de sistemas de baixo nível.",
+    ru: "Низкоуровневое системное программирование.",
+    tr: "Düşük seviyeli sistem programlama."
   },
   
-  course_csharp: { en: "C#", es: "C#", fr: "C#", de: "C#", zh: "C#", vi: "C#", it: "C#", hi: "सी#", ar: "سي شارب" },
+  course_csharp: { en: "C#", es: "C#", fr: "C#", de: "C#", zh: "C#", vi: "C#", it: "C#", hi: "सी#", ar: "سي شارب", ja: "C#", ko: "C#", pt: "C#", ru: "C#", tr: "C#" },
   desc_csharp: { 
     en: "Windows apps and Unity game dev.", 
     es: "Apps de Windows y desarrollo de juegos en Unity.", 
@@ -518,12 +962,50 @@ export const UI_TEXT: TranslationDictionary = {
     vi: "Ứng dụng Windows và phát triển game Unity.",
     it: "App Windows e sviluppo giochi Unity.",
     hi: "विंडोज ऐप्स और यूनिटी गेम देव।",
-    ar: "تطبيقات ويندوز وتطوير ألعاب يونيتي."
+    ar: "تطبيقات ويندوز وتطوير ألعاب يونيتي.",
+    ja: "WindowsアプリとUnityゲーム開発。",
+    ko: "Windows 앱 및 Unity 게임 개발.",
+    pt: "Apps Windows e dev de jogos Unity.",
+    ru: "Windows приложения и Unity.",
+    tr: "Windows uygulamaları ve Unity oyun geliştirme."
+  },
+  
+  course_other: { 
+    en: "Other", 
+    es: "Otro", 
+    fr: "Autre", 
+    de: "Andere", 
+    zh: "其他", 
+    vi: "Khác", 
+    it: "Altro", 
+    hi: "अन्य", 
+    ar: "آخر",
+    ja: "その他",
+    ko: "기타",
+    pt: "Outro",
+    ru: "Другое",
+    tr: "Diğer"
+  },
+  desc_other: { 
+    en: "Study any topic you want with AI.", 
+    es: "Estudia cualquier tema con IA.", 
+    fr: "Étudiez n'importe quel sujet avec l'IA.", 
+    de: "Lerne jedes Thema mit KI.", 
+    zh: "使用AI学习任何你想学的主题。", 
+    vi: "Học bất kỳ chủ đề nào with AI.", 
+    it: "Studia qualsiasi argomento con l'AI.", 
+    hi: "AI के साथ कोई भी विषय पढ़ें।", 
+    ar: "ادرس أي موضوع تريده مع الذكاء الاصطناعي.",
+    ja: "AIと一緒に好きなトピックを学びましょう。",
+    ko: "AI와 함께 원하는 주제를 공부하세요.",
+    pt: "Estude qualquer tópico com IA.",
+    ru: "Изучайте любую тему с ИИ.",
+    tr: "Yapay zeka ile istediğiniz konuyu çalışın."
   },
 
-  level_beg: { en: "Beginner", es: "Principiante", fr: "Débutant", de: "Anfänger", zh: "初学者", vi: "Người mới", it: "Principiante", hi: "शुरुआत", ar: "مبتدئ" },
-  level_int: { en: "Intermediate", es: "Intermedio", fr: "Intermédiaire", de: "Mittelstufe", zh: "中级", vi: "Trung cấp", it: "Intermedio", hi: "मध्यवर्ती", ar: "متوسط" },
-  level_adv: { en: "Advanced", es: "Avanzado", fr: "Avancé", de: "Fortgeschritten", zh: "高级", vi: "Nâng cao", it: "Avanzato", hi: "उन्नत", ar: "متقدم" },
+  level_beg: { en: "Beginner", es: "Principiante", fr: "Débutant", de: "Anfänger", zh: "初学者", vi: "Người mới", it: "Principiante", hi: "शुरुआत", ar: "مبتدئ", ja: "初級", ko: "초급", pt: "Iniciante", ru: "Новичок", tr: "Başlangıç" },
+  level_int: { en: "Intermediate", es: "Intermedio", fr: "Intermédiaire", de: "Mittelstufe", zh: "中级", vi: "Trung cấp", it: "Intermedio", hi: "मध्यवर्ती", ar: "متوسط", ja: "中級", ko: "중급", pt: "Intermediário", ru: "Средний", tr: "Orta" },
+  level_adv: { en: "Advanced", es: "Avanzado", fr: "Avancé", de: "Fortgeschritten", zh: "高级", vi: "Nâng cao", it: "Avanzato", hi: "उन्नत", ar: "متقدم", ja: "上級", ko: "고급", pt: "Avançado", ru: "Продвинутый", tr: "İleri" },
 };
 
 // Helper to create empty levels
@@ -534,6 +1016,13 @@ const createLevels = () => [
 ];
 
 export const COURSES: Course[] = [
+  {
+    id: 'other',
+    name: 'Other',
+    icon: '✨',
+    description: '',
+    levels: createLevels()
+  },
   {
     id: 'python',
     name: 'Python',

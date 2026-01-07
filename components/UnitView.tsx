@@ -1,16 +1,22 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { Flashcards } from './Flashcards';
-import { generateUnitContent } from '../services/geminiService';
-import { ArrowLeft, CheckCircle, AlertCircle, Eye, SlidersHorizontal, Play } from 'lucide-react';
+import { generateUnitContent, fetchVideos } from '../services/geminiService';
+import { ArrowLeft, CheckCircle, AlertCircle, Eye, SlidersHorizontal, Play, Youtube, AlertTriangle, ExternalLink, X, RotateCcw } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import { QuestionType } from '../types';
+import { QuestionType, Video } from '../types';
 
 export const UnitView: React.FC = () => {
   const { selectedUnit, selectedCourse, selectedLevel, selectUnit, updateUnitContent, t, language } = useApp();
-  const [activeTab, setActiveTab] = useState<'learn' | 'quiz'>('learn');
+  const [activeTab, setActiveTab] = useState<'learn' | 'quiz' | 'videos'>('learn');
   const [loading, setLoading] = useState(false);
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [loadingVideos, setLoadingVideos] = useState(false);
+  const [videosFetched, setVideosFetched] = useState(false);
+  
+  // Request Cancellation Tracking
+  const generationRequestId = useRef<number>(0);
   
   // Quiz State
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({}); // For MCQ
@@ -22,20 +28,90 @@ export const UnitView: React.FC = () => {
   const [configMode, setConfigMode] = useState(!selectedUnit?.content);
   const [quizCount, setQuizCount] = useState(3);
   const [selectedTypes, setSelectedTypes] = useState<QuestionType[]>(['mcq']);
+  const [unitFocus, setUnitFocus] = useState('');
+
+  useEffect(() => {
+    // Reset video state when unit changes
+    setVideos([]);
+    setVideosFetched(false);
+    setActiveTab('learn');
+    setUnitFocus('');
+  }, [selectedUnit?.id]);
+
+  useEffect(() => {
+    if (activeTab === 'videos' && !videosFetched && selectedUnit) {
+      const loadVideos = async () => {
+        setLoadingVideos(true);
+        const topic = `${selectedCourse?.name} - ${selectedUnit.title}`;
+        const results = await fetchVideos(topic, language);
+        setVideos(results);
+        setVideosFetched(true);
+        setLoadingVideos(false);
+      };
+      loadVideos();
+    }
+  }, [activeTab, selectedUnit, videosFetched, selectedCourse, language]);
 
   const handleStartLesson = async () => {
     if (selectedUnit && selectedCourse && selectedLevel) {
-      setLoading(true);
-      const data = await generateUnitContent(
-        selectedCourse.name, 
-        selectedUnit.title, 
-        selectedLevel.id, 
-        language,
-        { count: quizCount, types: selectedTypes }
-      );
-      updateUnitContent(selectedCourse.id, selectedLevel.id, selectedUnit.id, data.content, data.questions);
-      setLoading(false);
+      const requestId = Date.now();
+      generationRequestId.current = requestId;
+      
+      // Immediately switch to content view and show loading state
       setConfigMode(false);
+      setLoading(true);
+
+      try {
+        const data = await generateUnitContent(
+          selectedCourse.name, 
+          selectedUnit.title, 
+          selectedLevel.id, 
+          language,
+          { count: quizCount, types: selectedTypes },
+          unitFocus,
+          (partialContent) => {
+            // Streaming callback
+            if (generationRequestId.current === requestId) {
+               // If this is the first chunk, stop loading spinner
+               setLoading((prev) => {
+                 if (prev) return false;
+                 return prev;
+               });
+               // Update content in real-time
+               updateUnitContent(selectedCourse.id, selectedLevel.id, selectedUnit.id, partialContent, []);
+            }
+          }
+        );
+
+        // Only update if this request is still the active one
+        if (generationRequestId.current === requestId) {
+          updateUnitContent(selectedCourse.id, selectedLevel.id, selectedUnit.id, data.content, data.questions);
+          setLoading(false);
+        }
+      } catch (e) {
+        if (generationRequestId.current === requestId) {
+          setLoading(false);
+          // Optionally revert config mode or show error
+          setConfigMode(true);
+        }
+      }
+    }
+  };
+
+  const handleCancelGeneration = () => {
+    // Invalidate current request
+    generationRequestId.current = 0;
+    setLoading(false);
+    // Go back to config mode
+    setConfigMode(true);
+  };
+
+  const handleRegenerate = () => {
+    if (selectedCourse && selectedLevel && selectedUnit) {
+       // Clear current content effectively resetting to "not generated" state
+       updateUnitContent(selectedCourse.id, selectedLevel.id, selectedUnit.id, "", []);
+       // Explicitly switch to config mode
+       setConfigMode(true);
     }
   };
 
@@ -50,14 +126,26 @@ export const UnitView: React.FC = () => {
     });
   };
 
+  const submitQuiz = () => {
+    setQuizSubmitted(true);
+  };
+
   if (!selectedUnit) return null;
 
   if (loading) {
      return (
-        <div className="min-h-[50vh] flex flex-col items-center justify-center animate-fade-in">
+        <div className="min-h-[50vh] flex flex-col items-center justify-center animate-fade-in px-4">
            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-6" />
            <h2 className="text-xl font-bold dark:text-white mb-2">{t('generating_lesson')}</h2>
-           <p className="text-gray-500">{t('crafting_lesson')} {selectedUnit.title}</p>
+           <p className="text-gray-500 text-center max-w-md mb-8">{t('crafting_lesson')} {selectedUnit.title}</p>
+           
+           <button 
+             onClick={handleCancelGeneration}
+             className="flex items-center gap-2 px-6 py-3 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full font-semibold hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
+           >
+             <X size={18} />
+             {t('cancel')}
+           </button>
         </div>
      )
   }
@@ -81,6 +169,19 @@ export const UnitView: React.FC = () => {
           <p className="text-gray-500 dark:text-gray-400 mb-8">{selectedUnit.title}</p>
 
           <div className="space-y-8">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">
+                {t('unit_focus_label')}
+              </label>
+              <input 
+                 type="text"
+                 value={unitFocus}
+                 onChange={(e) => setUnitFocus(e.target.value)}
+                 placeholder={t('unit_focus_placeholder')}
+                 className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:ring-2 focus:ring-blue-500 outline-none text-gray-900 dark:text-white transition-all text-sm"
+              />
+            </div>
+
             <div>
               <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-4">
                 {t('num_questions')}: <span className="text-blue-600">{quizCount}</span>
@@ -137,7 +238,6 @@ export const UnitView: React.FC = () => {
     );
   }
 
-  // Main Unit View
   const handleMcqAnswer = (qId: string, idx: number) => {
     if (quizSubmitted) return;
     setSelectedAnswers(prev => ({ ...prev, [qId]: idx }));
@@ -151,19 +251,24 @@ export const UnitView: React.FC = () => {
     }));
   };
 
-  // Added submitQuiz function to fix error
-  const submitQuiz = () => {
-    setQuizSubmitted(true);
-  };
-
   return (
     <div className="animate-fade-in pb-20">
-      <button 
-        onClick={() => selectUnit(null)} 
-        className="mb-6 flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
-      >
-        <ArrowLeft size={16} /> {t('back')}
-      </button>
+      <div className="flex justify-between items-center mb-6">
+        <button 
+          onClick={() => selectUnit(null)} 
+          className="flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+        >
+          <ArrowLeft size={16} /> {t('back')}
+        </button>
+
+        <button 
+          onClick={handleRegenerate}
+          className="flex items-center gap-2 px-3 py-1.5 bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 rounded-lg text-xs font-semibold hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors"
+        >
+          <RotateCcw size={12} />
+          {t('regenerate')}
+        </button>
+      </div>
 
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
@@ -190,48 +295,88 @@ export const UnitView: React.FC = () => {
           >
             {t('quiz')}
           </button>
+          <button
+            onClick={() => setActiveTab('videos')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              activeTab === 'videos' 
+                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm' 
+                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700'
+            }`}
+          >
+            {t('videos')}
+          </button>
         </div>
       </div>
 
-      {activeTab === 'learn' ? (
-        <div className="max-w-4xl">
-          <div className="prose prose-lg dark:prose-invert prose-blue max-w-none">
+      {activeTab === 'learn' && (
+        <div className="max-w-4xl mx-auto">
+          <div className="prose prose-lg dark:prose-invert max-w-none">
             <ReactMarkdown 
                components={{
+                 // Headers with more spacing
+                 h1: ({children}) => <h1 className="text-4xl font-extrabold mt-12 mb-6 text-gray-900 dark:text-white leading-tight">{children}</h1>,
+                 h2: ({children}) => <h2 className="text-2xl font-bold mt-12 mb-6 text-gray-800 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-3">{children}</h2>,
+                 h3: ({children}) => <h3 className="text-xl font-bold mt-8 mb-4 text-gray-800 dark:text-gray-200">{children}</h3>,
+                 
+                 // Paragraphs with more line height and spacing
+                 p: ({children}) => <p className="text-lg leading-loose mb-6 text-gray-700 dark:text-gray-300">{children}</p>,
+                 
+                 // Lists with spacing
+                 ul: ({children}) => <ul className="list-disc pl-6 mb-6 space-y-3 text-lg text-gray-700 dark:text-gray-300">{children}</ul>,
+                 ol: ({children}) => <ol className="list-decimal pl-6 mb-6 space-y-3 text-lg text-gray-700 dark:text-gray-300">{children}</ol>,
+                 li: ({children}) => <li className="pl-2">{children}</li>,
+
+                 // Code blocks vs Inline code
                  code: ({node, inline, className, children, ...props}: any) => {
-                   if (inline) {
+                   // Check for multi-line content
+                   const content = String(children).replace(/\n$/, '');
+                   const isMultiLine = content.includes('\n');
+
+                   if (inline || !isMultiLine) {
+                     // INLINE CODE OR SINGLE LINE BLOCK: Distinct Pill Style
+                     // We treat single line blocks as inline-styled to prevent the huge Mac window look
                      return (
-                       <code className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm font-mono text-pink-600 dark:text-pink-400" {...props}>
+                       <code className="bg-indigo-50 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300 px-2 py-0.5 rounded-md text-[0.9em] font-mono border border-indigo-100 dark:border-indigo-800/50 align-middle" {...props}>
                          {children}
                        </code>
                      );
                    }
+                   
+                   // MULTI-LINE BLOCK CODE: Mac Terminal Style with Spacing
                    return (
-                     <div className="my-6 rounded-xl overflow-hidden shadow-2xl bg-[#1e1e1e] border border-gray-700/50">
-                       <div className="flex items-center gap-2 px-4 py-3 bg-[#2d2d2d] border-b border-gray-700/50">
+                     <div className="my-10 rounded-2xl overflow-hidden shadow-2xl bg-[#1e1e1e] border border-gray-700/50 transform transition-transform hover:scale-[1.01] duration-300">
+                       <div className="flex items-center gap-2 px-5 py-3 bg-[#2d2d2d] border-b border-gray-700/50">
                          <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
                          <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
                          <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-                         <div className="ml-2 text-xs text-gray-500 font-mono">code</div>
+                         <div className="ml-auto text-xs text-gray-500 font-mono opacity-50">code</div>
                        </div>
-                       <div className="p-4 overflow-x-auto">
-                         <code className="font-mono text-sm text-gray-200 leading-relaxed" {...props}>
+                       <div className="p-6 overflow-x-auto">
+                         <code className="font-mono text-sm text-gray-200 leading-relaxed block" {...props}>
                            {children}
                          </code>
                        </div>
                      </div>
                    );
-                 }
+                 },
+                 // Blockquotes
+                 blockquote: ({children}) => (
+                   <blockquote className="border-l-4 border-blue-500 pl-6 py-2 my-8 italic bg-blue-50/50 dark:bg-blue-900/10 rounded-r-xl text-gray-700 dark:text-gray-300">
+                     {children}
+                   </blockquote>
+                 )
                }}
             >
               {selectedUnit.content}
             </ReactMarkdown>
           </div>
-          <div className="my-12 border-t border-gray-100 dark:border-gray-800 pt-8">
+          <div className="my-16 border-t border-gray-100 dark:border-gray-800 pt-10">
             <Flashcards />
           </div>
         </div>
-      ) : (
+      )}
+
+      {activeTab === 'quiz' && (
         <div className="max-w-2xl mx-auto space-y-8">
           {selectedUnit.questions.length === 0 ? (
             <div className="text-center text-gray-500">No questions generated.</div>
@@ -356,6 +501,54 @@ export const UnitView: React.FC = () => {
                {t('submit')}
              </button>
           </div>
+        </div>
+      )}
+
+      {activeTab === 'videos' && (
+        <div className="max-w-4xl mx-auto">
+          {loadingVideos ? (
+             <div className="flex flex-col items-center justify-center py-20">
+               <div className="w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full animate-spin mb-4" />
+               <p className="text-gray-500">{t('searching_videos')}</p>
+             </div>
+          ) : videos.length === 0 ? (
+             <div className="text-center py-20 bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700">
+                <AlertTriangle className="mx-auto h-12 w-12 text-yellow-500 mb-4" />
+                <h3 className="text-xl font-bold dark:text-white mb-2">{t('unable_to_find_videos')}</h3>
+             </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {videos.map((video) => (
+                <div key={video.videoId} className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="aspect-video w-full bg-black relative group">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={`https://www.youtube-nocookie.com/embed/${video.videoId}?rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${window.location.origin}`}
+                      title={video.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      referrerPolicy="no-referrer"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">{video.title}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-3 mb-4">{video.description}</p>
+                    <a 
+                      href={`https://www.youtube.com/watch?v=${video.videoId}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      <ExternalLink size={14} />
+                      Watch on YouTube
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

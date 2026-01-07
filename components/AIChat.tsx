@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { generateChatResponse } from '../services/geminiService';
@@ -100,9 +101,13 @@ export const AIChat: React.FC = () => {
                     <ReactMarkdown 
                       components={{
                         code: ({node, inline, className, children, ...props}: any) => {
-                          if (inline) {
+                          // Check for multi-line content
+                          const content = String(children).replace(/\n$/, '');
+                          const isMultiLine = content.includes('\n');
+
+                          if (inline || !isMultiLine) {
                             return (
-                              <code className={`${className} bg-black/10 dark:bg-white/10 px-1 py-0.5 rounded`} {...props}>
+                              <code className="bg-indigo-50 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300 px-2 py-0.5 rounded-md text-[0.9em] font-mono border border-indigo-100 dark:border-indigo-800/50 align-middle" {...props}>
                                 {children}
                               </code>
                             )

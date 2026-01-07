@@ -1,11 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { Settings } from './components/Settings';
 import { AIChat } from './components/AIChat';
 import { UnitView } from './components/UnitView';
 import { generateSyllabus } from './services/geminiService';
-import { LayoutGrid, BookOpen, Settings as SettingsIcon, ChevronRight, Wand2, Sparkles } from 'lucide-react';
+import { LayoutGrid, BookOpen, Settings as SettingsIcon, ChevronRight, Wand2, Sparkles, X } from 'lucide-react';
 
 const MainContent = () => {
   const { 
@@ -23,21 +23,64 @@ const MainContent = () => {
   
   const [showSettings, setShowSettings] = useState(false);
   const [syllabusFocus, setSyllabusFocus] = useState('');
+  const [customSubject, setCustomSubject] = useState('');
+  const [subjectError, setSubjectError] = useState(false);
   const [generatingSyllabus, setGeneratingSyllabus] = useState(false);
+
+  // Cancellation Ref
+  const syllabusRequestId = useRef<number>(0);
+
+  // Reset custom fields when course/level changes
+  useEffect(() => {
+    setSyllabusFocus('');
+    setCustomSubject('');
+    setSubjectError(false);
+    setGeneratingSyllabus(false);
+    syllabusRequestId.current = 0;
+  }, [selectedCourse?.id, selectedLevel?.id]);
 
   const handleGenerateSyllabus = async () => {
     if (!selectedCourse || !selectedLevel) return;
+
+    let targetCourseName = selectedCourse.name;
+    let targetFocus = syllabusFocus;
+
+    if (selectedCourse.id === 'other') {
+      if (!customSubject.trim()) {
+        setSubjectError(true);
+        return;
+      }
+      targetCourseName = customSubject;
+    }
+
+    const requestId = Date.now();
+    syllabusRequestId.current = requestId;
     setGeneratingSyllabus(true);
-    // Pass the current language to generating function
-    const units = await generateSyllabus(
-      selectedCourse.name, 
-      selectedLevel.id, 
-      syllabusFocus || `General ${selectedCourse.name} concepts`,
-      language
-    );
-    updateCourseUnits(selectedCourse.id, selectedLevel.id, units);
+
+    try {
+      const units = await generateSyllabus(
+        targetCourseName, 
+        selectedLevel.id, 
+        targetFocus || `General ${targetCourseName} concepts`,
+        language
+      );
+      
+      if (syllabusRequestId.current === requestId) {
+        updateCourseUnits(selectedCourse.id, selectedLevel.id, units);
+        setGeneratingSyllabus(false);
+        setSyllabusFocus('');
+        setCustomSubject('');
+      }
+    } catch (error) {
+       if (syllabusRequestId.current === requestId) {
+         setGeneratingSyllabus(false);
+       }
+    }
+  };
+
+  const handleCancelSyllabus = () => {
+    syllabusRequestId.current = 0;
     setGeneratingSyllabus(false);
-    setSyllabusFocus('');
   };
 
   // If viewing a unit
@@ -184,34 +227,67 @@ const MainContent = () => {
                     </div>
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('design_path')}</h3>
                     <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-md mx-auto">
-                      {t('tell_ai')}
+                      {selectedCourse.id === 'other' ? t('other_prompt_desc') : t('tell_ai')}
                     </p>
                     
                     <div className="max-w-md mx-auto space-y-4">
-                      <input 
-                        type="text" 
-                        value={syllabusFocus}
-                        onChange={(e) => setSyllabusFocus(e.target.value)}
-                        placeholder="E.g. Web scraping, APIs..."
-                        className="w-full px-5 py-4 rounded-xl bg-gray-50 dark:bg-gray-800 border-none focus:ring-2 focus:ring-blue-500 outline-none text-gray-900 dark:text-white"
-                      />
-                      <button 
-                        onClick={handleGenerateSyllabus}
-                        disabled={generatingSyllabus}
-                        className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all active:scale-95 disabled:opacity-70 flex items-center justify-center gap-2"
-                      >
-                        {generatingSyllabus ? (
-                          <>
-                             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                             {t('generating_syllabus')}
-                          </>
-                        ) : (
-                          <>
-                            <Sparkles size={20} />
-                            {t('generate_syllabus')}
-                          </>
-                        )}
-                      </button>
+                      {selectedCourse.id === 'other' ? (
+                        <>
+                          <div className="text-left">
+                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 ml-1">
+                                {t('subject_label')} <span className="text-red-500">*</span>
+                            </label>
+                            <input 
+                              type="text" 
+                              value={customSubject}
+                              onChange={(e) => { setCustomSubject(e.target.value); setSubjectError(false); }}
+                              placeholder={t('subject_placeholder')}
+                              className={`w-full px-5 py-4 rounded-xl bg-gray-50 dark:bg-gray-800 border-2 ${subjectError ? 'border-red-500 focus:ring-red-500' : 'border-transparent focus:ring-blue-500'} focus:ring-2 outline-none text-gray-900 dark:text-white transition-all`}
+                            />
+                            {subjectError && <p className="text-red-500 text-xs mt-1 ml-1">This field is required</p>}
+                          </div>
+                          
+                          <div className="text-left">
+                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 ml-1">
+                                {t('focus_label')} <span className="text-gray-400 font-normal text-xs">({t('optional')})</span>
+                            </label>
+                            <input 
+                              type="text" 
+                              value={syllabusFocus}
+                              onChange={(e) => setSyllabusFocus(e.target.value)}
+                              placeholder={t('focus_placeholder')}
+                              className="w-full px-5 py-4 rounded-xl bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:ring-2 focus:ring-blue-500 outline-none text-gray-900 dark:text-white"
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <input 
+                          type="text" 
+                          value={syllabusFocus}
+                          onChange={(e) => setSyllabusFocus(e.target.value)}
+                          placeholder="E.g. Web scraping, APIs..."
+                          className="w-full px-5 py-4 rounded-xl bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:ring-2 focus:ring-blue-500 outline-none text-gray-900 dark:text-white"
+                        />
+                      )}
+                      
+                      {generatingSyllabus ? (
+                        <button 
+                          onClick={handleCancelSyllabus}
+                          className="w-full py-4 bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-900/30 dark:hover:bg-red-900/50 dark:text-red-400 rounded-xl font-bold transition-all flex items-center justify-center gap-2"
+                        >
+                          <X size={20} />
+                          {t('cancel')}
+                        </button>
+                      ) : (
+                        <button 
+                          onClick={handleGenerateSyllabus}
+                          disabled={generatingSyllabus}
+                          className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-lg shadow-blue-500/30 transition-all active:scale-95 disabled:opacity-70 flex items-center justify-center gap-2"
+                        >
+                          <Sparkles size={20} />
+                          {t('generate_syllabus')}
+                        </button>
+                      )}
                     </div>
                   </div>
                 )}

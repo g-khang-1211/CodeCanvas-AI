@@ -1,5 +1,5 @@
 
-export type LanguageCode = 'en' | 'es' | 'fr' | 'de' | 'zh' | 'vi' | 'it' | 'hi' | 'ar';
+export type LanguageCode = 'en' | 'es' | 'fr' | 'de' | 'zh' | 'vi' | 'it' | 'hi' | 'ar' | 'ja' | 'ko' | 'pt' | 'ru' | 'tr';
 
 export type AppTheme = 'light' | 'dark';
 
@@ -54,4 +54,10 @@ export interface ChatMessage {
   role: 'user' | 'model';
   text: string;
   timestamp: number;
+}
+
+export interface Video {
+  videoId: string;
+  title: string;
+  description: string;
 }
