@@ -6,6 +6,13 @@ import { AIChat } from './components/AIChat';
 import { UnitView } from './components/UnitView';
 import { generateSyllabus } from './services/geminiService';
 import { LayoutGrid, BookOpen, Settings as SettingsIcon, ChevronRight, Wand2, Sparkles, X } from 'lucide-react';
+import { generateText } from './services/api'
+
+const handleGenerate = async () => {
+  const result = await generateText("Hello AI")
+  console.log(result)
+}
+
 
 const MainContent = () => {
   const { 
